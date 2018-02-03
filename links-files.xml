@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<extension version="2.5" type="plugin" group="jce" method="upgrade">
+	<name>plg_jce_links_files</name>
+    <version>@@version@@</version>
+    <creationDate>@@date@@</creationDate>
+    <author>Ryan Demmer</author>
+    <authorEmail>@@e-mail@@</authorEmail>
+    <authorUrl>https://www.joomlacontenteditor.net/</authorUrl>
+    <copyright>@@copyright@@</copyright>
+    <license>@@licence@@</license>
+    <description>PLG_JCE_LINKS_FILES_XML_DESC</description>
+    
+    <files folder="plugins/jce/links-files">
+		<file plugin="links-files">links-files.php</file>
+	</files>
+
+    <params group="files">
+        <param name="dir" type="text" default="" size="50" label="WF_PARAM_DIRECTORY" description="WF_PARAM_DIRECTORY_DESC"/>
+        <param name="extensions" type="extension" default="doc,docx,ppt,pptx,xls,xlsx,gif,jpeg,jpg,png,pdf,zip,tar,gz,rar,swf,mov,mp4,qt,wmv,asx,asf,avi,wav,mp3,aiff,ogg,ogv,oga,webm,odt,odg,odp,ods,odf,rtf,txt,csv" label="WF_PARAM_EXTENSIONS" description="WF_PARAM_EXTENSIONS_DESC" />
+        <param name="name" type="filesystem" group="filesystem" default="" label="WF_PARAM_FILESYSTEM" description="WF_PARAM_FILESYSTEM_DESC" />
+    </params>
+    
+	<languages folder="administrator/language/en-GB">
+    	<language tag="en-GB">en-GB.plg_jce_links-files.ini</language>
+		<language tag="en-GB">en-GB.plg_jce_links-files.sys.ini</language>
+    </languages>
+</extension>
