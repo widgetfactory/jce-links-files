@@ -109,9 +109,6 @@ class WFLinkBrowser_Files
 
        $path = rawurldecode($args->id);
 
-       $path = filter_var($path, FILTER_SANITIZE_URL);
-       $path = (string) preg_replace('#[^\w\:\/_\.]#i', '', $path);
-
        // check file name
        WFUtility::checkPath($path);
 
