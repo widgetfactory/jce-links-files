@@ -14,7 +14,7 @@
 		<file plugin="links-files">links-files.php</file>
 	</files>
 	
-	<fields>
+	<fields name="files">
         	<fieldset name="links.files">
         		<field name="dir" type="text" default="" size="50" label="WF_PARAM_DIRECTORY" description="WF_PARAM_DIRECTORY_DESC"/>
         		<field name="extensions" type="extension" default="doc,docx,ppt,pptx,xls,xlsx,gif,jpeg,jpg,png,pdf,zip,tar,gz,rar,swf,mov,mp4,qt,wmv,asx,asf,avi,wav,mp3,aiff,ogg,ogv,oga,webm,odt,odg,odp,ods,odf,rtf,txt,csv" label="WF_PARAM_EXTENSIONS" description="WF_PARAM_EXTENSIONS_DESC" />
