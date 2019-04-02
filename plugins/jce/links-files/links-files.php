@@ -1,8 +1,8 @@
 <?php
 
 /**
- * @copyright 	Copyright (c) 2009-2017 Ryan Demmer. All rights reserved
- * @license   	GNU/GPL 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @copyright     Copyright (c) 2009-2019 Ryan Demmer. All rights reserved
+ * @license       GNU/GPL 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * JCE is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
@@ -13,9 +13,9 @@ defined('_WF_EXT') or die('RESTRICTED');
 wfimport('editor.libraries.classes.browser');
 
 class WFLinkBrowser_Files
-{    
+{
     protected $filetypes = 'doc,docx,ppt,pps,pptx,ppsx,xls,xlsx,gif,jpeg,jpg,png,pdf,zip,tar,gz,swf,rar,mov,mp4,qt,wmv,asx,asf,avi,wav,mp3,aiff,odt,odg,odp,ods,odf,rtf,txt,csv';
-    
+
     private static $browser;
 
     public function __construct($options = array())
@@ -36,7 +36,7 @@ class WFLinkBrowser_Files
     private function getFileSystemName()
     {
         $wf = WFEditorPlugin::getInstance();
-        
+
         $base_filesystem = $wf->getParam('editor.filesystem.name', '', '', 'string', false);
 
         $filesystem = $wf->getParam('links.files.filesystem.name', $base_filesystem);
@@ -53,12 +53,12 @@ class WFLinkBrowser_Files
 
         return $filesystem;
     }
-    
+
     protected function getFileBrowserConfig($config = array())
     {
         $wf = WFEditorPlugin::getInstance();
-        
-        $filetypes  = $wf->getParam('links.files.extensions', $this->filetypes);
+
+        $filetypes = $wf->getParam('links.files.extensions', $this->filetypes);
 
         $filter = (array) $wf->getParam('editor.dir_filter', array());
 
@@ -74,19 +74,19 @@ class WFLinkBrowser_Files
             'dir' => $dir,
             'filesystem' => $this->getFileSystemName(),
             'filetypes' => $filetypes,
-            'filter' => $filter
+            'filter' => $filter,
         );
 
         return $base;
     }
-    
-    public function display() {}
-    
+
+    public function display()
+    {}
+
     public function isEnabled()
     {
         $wf = WFEditorPlugin::getInstance();
-
-        return $wf->checkAccess($wf->getName().'.links.files.enable', 1);
+        return (bool) $wf->getParam('links.files.enable', 1);
     }
 
     public function getOption()
@@ -100,41 +100,38 @@ class WFLinkBrowser_Files
     }
 
     public function getLinks($args)
-    {       
-       $links = array();
+    {
+        $links = array();
 
-       if (!isset($args->id)) {
+        if (!isset($args->id)) {
             $args->id = '';
-       }
+        }
 
-       $path = rawurldecode($args->id);
+        $path = rawurldecode($args->id);
 
-       // check file name
-       WFUtility::checkPath($path);
+        // check file name
+        WFUtility::checkPath($path);
 
-       $filesystem = self::$browser->getFileSystem();
-       $root = $filesystem->getRootDir();
+        $items = self::$browser->getItems($path);
 
-       $items   = self::$browser->getItems($path);
+        foreach ($items['folders'] as $folder) {
+            $links[] = array(
+                'id' => 'option=com_wf_files&id=' . rawurlencode($folder['id']),
+                'name' => $folder['name'],
+                'class' => 'folder nolink',
+            );
+        }
 
-           foreach($items['folders'] as $folder) {            
-                $links[] = array(
-                    'id'    => 'option=com_wf_files&id=' . rawurlencode($folder['id']),
-                    'name'  => $folder['name'],
-                    'class' => 'folder nolink',
-                );
-           }
+        foreach ($items['files'] as $file) {
+            $links[] = array(
+                'url' => $file['url'],
+                'id' => $file['id'],
+                'name' => $file['name'],
+                'class' => 'file',
+                'icon' => 'pdf',
+            );
+        }
 
-           foreach($items['files'] as $file) {
-                $links[] = array(
-                    'url'   => $file['url'],
-                    'id'    => $file['id'],
-                    'name'  => $file['name'],
-                    'class' => 'file',
-                    'icon' => 'pdf'
-                );
-            }
-        
         return $links;
     }
 }
